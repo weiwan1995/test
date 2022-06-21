@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Utils {
-    static DataSource dataSource;
+     static DataSource dataSource=null;
 
     static {
         try {
@@ -18,11 +18,11 @@ public class Utils {
             properties.load(resourceAsStream);
             dataSource = DruidDataSourceFactory.createDataSource(properties);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
-    static Connection con;
+    static Connection con=null;
 
     public static Connection getConnection() throws SQLException {
         if (con != null) {

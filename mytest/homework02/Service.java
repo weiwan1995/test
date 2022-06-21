@@ -57,6 +57,7 @@ public class Service {
             throw new RuntimeException(e);
         }
     }
+    //取钱
     public int minusMoney(Double money){
         try {
             return dao.outMoney(money);
@@ -64,18 +65,16 @@ public class Service {
             throw new RuntimeException(e);
         }
     }
-    public boolean moneyService(String inName,Double money){
+    public boolean moneyService(int id,Double money){
         boolean result=false;
         try {
             //开启事务
            Utils.startTranslation();
-
             //取出
             dao.outMoney(money);
 
-
             //存入
-            dao.inMoney(money);
+            dao.inOtherMoney(id,money);
 
             result=true;
             //提交事务

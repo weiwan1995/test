@@ -15,8 +15,8 @@ public class Dao {
     //增加
     public int addUser(User user) throws SQLException {
         QueryRunner queryRunner = new QueryRunner(dataSource);
-        String sql = "insert into user(username,password,money)values(?,?,?)";
-        Object[] params = {user.getName(), user.getPassword(), user.getMoney()};
+        String sql = "insert into user values(?,?,?,?)";
+        Object[] params = {user.getId(),user.getName(), user.getPassword(), user.getMoney()};
         return queryRunner.update(sql, params);
     }
 
@@ -59,14 +59,31 @@ public class Dao {
         return queryRunner.query(sql, new ScalarHandler<Double>());
     }
 
-    //存钱
-    public int inMoney( double moeny) throws Exception {
+    //给自己存钱
+    public int inMoney( double money) throws Exception {
 
         QueryRunner queryRunner = new QueryRunner();
 
         String sql = "UPDATE user SET money=money+? ";
 
-        Object[] params = {moeny};
+        Object[] params = {money};
+
+        Connection connection = Utils.getConnection();
+
+        int row = queryRunner.update(connection, sql, params);
+
+        Utils.closeTranslation(connection);
+
+        return row;
+    }
+    //给别人存钱
+    public int inOtherMoney( int id,double money) throws Exception {
+
+        QueryRunner queryRunner = new QueryRunner();
+
+        String sql = "UPDATE user SET money=money+? where id=?";
+
+        Object[] params = {money,id};
 
         Connection connection = Utils.getConnection();
 
@@ -79,13 +96,13 @@ public class Dao {
 
 
     //取钱
-    public int outMoney( double moeny) throws Exception {
+    public int outMoney( double money) throws Exception {
 
         QueryRunner queryRunner = new QueryRunner();
 
         String sql = "UPDATE user SET money=money-? ";
 
-        Object[] params = {moeny};
+        Object[] params = {money};
 
         Connection connection = Utils.getConnection();
 
