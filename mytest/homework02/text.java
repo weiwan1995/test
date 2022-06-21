@@ -20,7 +20,11 @@ public class text {
             switch (choose){
                 case"1":
                     System.out.println("请输入用户名");
-                    System.out.println("请输入");
+                    String name = scanner.next();
+                    System.out.println("请输入密码");
+                    String pwd1 = scanner.next();
+                    System.out.println("请校准密码");
+                    String pwd2 = scanner.next();
             }
         }
     }
